@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Design Maker</title>
+<meta name="description" content="Design Maker turns architects' carpentry drawings into 3D models, assembly steps, cutting lists, board layouts and price quotes — in Hebrew, English and Russian." />
+<meta property="og:title" content="Design Maker" />
+<meta property="og:description" content="From the architect's drawing to the cutting list." />
+<meta property="og:image" content="og.jpg" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800&display=swap" />
+<style>
+/* Layout: one long page — hero with the cover, how it works, what it does, languages, footer.
+   Palette taken from the cover: workshop navy, drawing cyan, cutting orange. */
+:root {
+  --navy: #17232b;
+  --navy-2: #1f2f39;
+  --ink: #e9eef1;
+  --muted: #a7b6bf;
+  --cyan: #22c3e6;
+  --orange: #f39a1e;
+  --paper: #f4f6f7;
+  --paper-ink: #17232b;
+  --paper-muted: #55656e;
+  --line: #2c3f4b;
+  --font: "Rubik", "Segoe UI", Arial, sans-serif;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body { font: 17px/1.6 var(--font); background: var(--paper); color: var(--paper-ink); }
+a { color: inherit; }
+.wrap { max-width: 1180px; margin: 0 auto; padding-inline: 20px; }
+
+header { background: var(--navy); color: var(--ink); position: sticky; top: 0; z-index: 5; border-block-end: 1px solid var(--line); }
+header .wrap { display: flex; align-items: center; gap: 16px; padding-block: 12px; }
+.logo { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 20px; text-decoration: none; }
+.logo i { width: 34px; height: 34px; border-radius: 9px; background: linear-gradient(135deg, var(--cyan), #1474d4); display: grid; place-items: center; font-style: normal; font-weight: 800; font-size: 15px; color: #fff; }
+.langs { margin-inline-start: auto; display: inline-flex; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+.langs button { background: none; border: 0; color: var(--muted); font: 500 14px var(--font); padding: 7px 12px; cursor: pointer; }
+.langs button[aria-pressed="true"] { background: var(--orange); color: var(--navy); }
+
+.hero { background: var(--navy); color: var(--ink); padding-block: 26px 56px; }
+.cover { border-radius: 16px; overflow: hidden; border: 1px solid var(--line); box-shadow: 0 30px 60px rgb(0 0 0 / 35%); }
+.cover img { display: block; width: 100%; height: auto; }
+.hero h1 { font-size: clamp(30px, 5vw, 52px); line-height: 1.1; margin: 34px 0 12px; font-weight: 800; letter-spacing: -0.01em; text-wrap: balance; }
+.hero h1 b { color: var(--orange); font-weight: 800; }
+.hero p.lead { color: var(--muted); font-size: clamp(17px, 2vw, 20px); max-width: 760px; margin: 0; }
+.cta { display: flex; flex-wrap: wrap; gap: 12px; margin-block-start: 26px; }
+.btn { display: inline-flex; align-items: center; gap: 8px; min-height: 48px; padding: 0 22px; border-radius: 12px; font-weight: 600; text-decoration: none; }
+.btn.primary { background: var(--orange); color: var(--navy); }
+.btn.ghost { border: 1px solid var(--line); color: var(--ink); }
+
+section { padding-block: 64px; }
+h2 { font-size: clamp(26px, 3.4vw, 36px); margin: 0 0 8px; font-weight: 700; text-wrap: balance; }
+.sub { color: var(--paper-muted); margin: 0 0 30px; max-width: 760px; }
+
+.steps { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; counter-reset: s; }
+.step { background: #fff; border: 1px solid #dde3e6; border-radius: 14px; padding: 20px; position: relative; }
+.step::before { counter-increment: s; content: counter(s); position: absolute; inset-block-start: -14px; inset-inline-start: 18px; width: 30px; height: 30px; border-radius: 50%; background: var(--navy); color: var(--orange); display: grid; place-items: center; font-weight: 700; font-size: 15px; }
+.step h3 { margin: 10px 0 6px; font-size: 18px; }
+.step p { margin: 0; color: var(--paper-muted); font-size: 15px; }
+
+.features { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.feature { background: #fff; border: 1px solid #dde3e6; border-radius: 14px; padding: 22px; }
+.feature .ic { width: 42px; height: 42px; border-radius: 11px; display: grid; place-items: center; background: #e5f7fb; color: #0e8fae; margin-block-end: 12px; }
+.feature.o .ic { background: #fff1de; color: #b8680a; }
+.feature h3 { margin: 0 0 6px; font-size: 18px; }
+.feature p { margin: 0; color: var(--paper-muted); font-size: 15px; }
+
+.band { background: var(--navy); color: var(--ink); }
+.band .sub { color: var(--muted); }
+.langs-demo { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.langs-demo div { border: 1px solid var(--line); border-radius: 14px; padding: 20px; background: var(--navy-2); }
+.langs-demo b { display: block; font-size: 20px; margin-block-end: 6px; }
+.langs-demo span { color: var(--muted); font-size: 15px; }
+
+footer { background: var(--navy); color: var(--muted); padding-block: 28px; font-size: 14px; border-block-start: 1px solid var(--line); }
+footer .wrap { display: flex; flex-wrap: wrap; gap: 10px 24px; justify-content: space-between; }
+
+[data-l] { display: none; }
+html[lang="he"] [data-l="he"], html[lang="en"] [data-l="en"], html[lang="ru"] [data-l="ru"] { display: revert; }
+
+@media (max-width: 900px) {
+  .steps, .features, .langs-demo { grid-template-columns: minmax(0, 1fr); }
+  .step { margin-block-start: 10px; }
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <a class="logo" href="#"><i>DM</i>Design Maker</a>
+    <div class="langs" role="group" aria-label="Language">
+      <button type="button" data-set="he" lang="he">עברית</button>
+      <button type="button" data-set="en" lang="en">English</button>
+      <button type="button" data-set="ru" lang="ru">Русский</button>
+    </div>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="wrap">
+    <div class="cover"><img src="cover.jpg" width="2000" height="1116" alt="Design Maker — measure, edit, slice, cut" /></div>
+    <h1>
+      <span data-l="he">מהשרטוט של האדריכל <b>עד רשימת החיתוך</b></span>
+      <span data-l="en">From the architect’s drawing <b>to the cutting list</b></span>
+      <span data-l="ru">От чертежа архитектора <b>до карты раскроя</b></span>
+    </h1>
+    <p class="lead">
+      <span data-l="he">מעלים את קובץ הנגרות של האדריכל, בונים כל ארון ויחידה, ומקבלים מודל תלת־ממדי, הוראות הרכבה, רשימת חיתוך, סידור על פלטות והצעת מחיר — עם התראה על כל מידה חסרה או שגויה.</span>
+      <span data-l="en">Upload the architect’s carpentry file, build each cabinet and unit, and get a 3D model, assembly steps, a cutting list, board layouts and a price quote — with a warning for every missing or wrong measurement.</span>
+      <span data-l="ru">Загрузите столярный файл архитектора, соберите каждый шкаф и модуль — и получите 3D‑модель, порядок сборки, спецификацию деталей, раскрой листов и коммерческое предложение, с предупреждением о каждом недостающем или ошибочном размере.</span>
+    </p>
+  </div>
+</div>
+
+<section>
+  <div class="wrap">
+    <h2><span data-l="he">איך זה עובד</span><span data-l="en">How it works</span><span data-l="ru">Как это работает</span></h2>
+    <p class="sub"><span data-l="he">ארבעה שלבים, בלי ידע טכני.</span><span data-l="en">Four steps, no technical knowledge needed.</span><span data-l="ru">Четыре шага, без технических знаний.</span></p>
+    <div class="steps">
+      <div class="step">
+        <h3><span data-l="he">מעלים שרטוטים</span><span data-l="en">Upload the drawings</span><span data-l="ru">Загрузите чертежи</span></h3>
+        <p><span data-l="he">PDF, PNG או JPG מהאדריכל. כל קובץ נבדק לפני השימוש.</span><span data-l="en">PDF, PNG or JPG from the architect. Every file is safety-checked first.</span><span data-l="ru">PDF, PNG или JPG от архитектора. Каждый файл проверяется на безопасность.</span></p>
+      </div>
+      <div class="step">
+        <h3><span data-l="he">בונים פריטים</span><span data-l="en">Build the items</span><span data-l="ru">Соберите изделия</span></h3>
+        <p><span data-l="he">ארון, אי, שולחן או כמה יחידות יחד — ליד השרטוט, עם כלי מדידה.</span><span data-l="en">A wardrobe, an island, a table or several units together — next to the drawing, with measuring tools.</span><span data-l="ru">Шкаф, остров, стол или несколько модулей — рядом с чертежом, с инструментами измерения.</span></p>
+      </div>
+      <div class="step">
+        <h3><span data-l="he">מתקנים בעיות</span><span data-l="en">Fix the problems</span><span data-l="ru">Исправьте ошибки</span></h3>
+        <p><span data-l="he">מידות חסרות, חלקים מתנגשים, חלקים שלא נכנסים לפלטה — מסומנים באדום.</span><span data-l="en">Missing sizes, parts that clash, parts that won’t fit a board — marked in red.</span><span data-l="ru">Недостающие размеры, пересечения деталей, детали больше листа — отмечены красным.</span></p>
+      </div>
+      <div class="step">
+        <h3><span data-l="he">מתמחרים וחותכים</span><span data-l="en">Price and cut</span><span data-l="ru">Цена и раскрой</span></h3>
+        <p><span data-l="he">הצעת מחיר ללקוח, רשימת חיתוך וסידור פלטות לנגרייה.</span><span data-l="en">A quote for the client, a cutting list and board layouts for the shop.</span><span data-l="ru">Предложение для заказчика, спецификация и раскрой для цеха.</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="padding-block-start: 0">
+  <div class="wrap">
+    <h2><span data-l="he">מה מקבלים</span><span data-l="en">What you get</span><span data-l="ru">Что вы получаете</span></h2>
+    <p class="sub"><span data-l="he">כל מה שצריך מהשרטוט ועד ההתקנה, במקום אחד.</span><span data-l="en">Everything from the drawing to the installation, in one place.</span><span data-l="ru">Всё — от чертежа до монтажа — в одном месте.</span></p>
+    <div class="features">
+      <div class="feature">
+        <div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l9 5v10l-9 5-9-5V7zM12 22V12M21 7l-9 5-9-5"/></svg></div>
+        <h3><span data-l="he">מודל תלת־ממדי במידות אמיתיות</span><span data-l="en">A 3D model in real sizes</span><span data-l="ru">3D‑модель в реальных размерах</span></h3>
+        <p><span data-l="he">מסובבים, מפרקים לחלקים ורואים כל דופן, מחיצה, מגירה ומכשיר.</span><span data-l="en">Turn it, pull it apart and see every side, partition, drawer and appliance.</span><span data-l="ru">Вращайте, разбирайте на детали и смотрите каждую стенку, перегородку, ящик и технику.</span></p>
+      </div>
+      <div class="feature o">
+        <div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.5 2.5-2.4-.6-.6-2.4z"/></svg></div>
+        <h3><span data-l="he">הוראות הרכבה שלב אחר שלב</span><span data-l="en">Step-by-step assembly</span><span data-l="ru">Сборка по шагам</span></h3>
+        <p><span data-l="he">מה מתחבר למה, באיזה בורג וכמה — ורמת קושי לכל פריט.</span><span data-l="en">What connects to what, with which fastener and how many — plus a difficulty level for every item.</span><span data-l="ru">Что с чем соединяется, каким крепежом и сколько — и уровень сложности каждого изделия.</span></p>
+      </div>
+      <div class="feature">
+        <div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4M12 17h.01M10.3 3.9L1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg></div>
+        <h3><span data-l="he">בעיות מסומנות על הדגם</span><span data-l="en">Problems shown on the model</span><span data-l="ru">Ошибки прямо на модели</span></h3>
+        <p><span data-l="he">מידה שלא מסתכמת, נישה קטנה מדי למדיח, מדף ארוך מדי — לפני שחותכים.</span><span data-l="en">Widths that don’t add up, a niche too small for the dishwasher, a shelf too long — before you cut.</span><span data-l="ru">Размеры не сходятся, ниша мала для посудомойки, полка слишком длинная — до раскроя.</span></p>
+      </div>
+      <div class="feature o">
+        <div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l9 5-9 5-9-5 9-5zM3 13l9 5 9-5"/></svg></div>
+        <h3><span data-l="he">רשימת חיתוך וסידור פלטות</span><span data-l="en">Cutting list and board layouts</span><span data-l="ru">Спецификация и раскрой</span></h3>
+        <p><span data-l="he">כל חלק במ״מ, פרזול וברגים, וכמה פלטות צריך להזמין.</span><span data-l="en">Every part in mm, hardware and screws, and how many boards to order.</span><span data-l="ru">Каждая деталь в мм, фурнитура и крепёж, и сколько листов заказать.</span></p>
+      </div>
+      <div class="feature">
+        <div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7c4.4 0 8-1.3 8-3s-3.6-3-8-3-8 1.3-8 3 3.6 3 8 3zM4 4v6c0 1.7 3.6 3 8 3s8-1.3 8-3V4M4 10v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6"/></svg></div>
+        <h3><span data-l="he">הצעת מחיר</span><span data-l="en">Price quotes</span><span data-l="ru">Коммерческое предложение</span></h3>
+        <p><span data-l="he">לפי המחירים שלכם — פלטות, אבן, צבע, פרזול ועבודה — עם אפשרות לשנות כל שורה.</span><span data-l="en">From your own prices — boards, stone, lacquer, hardware and labour — and every line can be changed.</span><span data-l="ru">По вашим ценам — листы, камень, эмаль, фурнитура и работа — любую строку можно изменить.</span></p>
+      </div>
+      <div class="feature o">
+        <div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10zM9 12l2 2 4-4"/></svg></div>
+        <h3><span data-l="he">קבצים בטוחים</span><span data-l="en">Safe files</span><span data-l="ru">Безопасные файлы</span></h3>
+        <p><span data-l="he">כל העלאה נבדקת: סוג הקובץ, קוד מוסתר ב־PDF, וסריקת וירוסים.</span><span data-l="en">Every upload is checked: the real file type, hidden code inside PDFs, and a virus scan.</span><span data-l="ru">Каждая загрузка проверяется: настоящий тип файла, скрытый код в PDF и проверка на вирусы.</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band">
+  <div class="wrap">
+    <h2><span data-l="he">בשפה של הנגרייה</span><span data-l="en">In the workshop’s language</span><span data-l="ru">На языке мастерской</span></h2>
+    <p class="sub"><span data-l="he">עברית מימין לשמאל, אנגלית ורוסית — מחליפים בלחיצה.</span><span data-l="en">Hebrew right-to-left, English and Russian — switch with one click.</span><span data-l="ru">Иврит справа налево, английский и русский — переключение одним нажатием.</span></p>
+    <div class="langs-demo">
+      <div lang="he" dir="rtl"><b>עברית</b><span>גוף, חזית, מחיצה, סוקל, קלאפה</span></div>
+      <div lang="en" dir="ltr"><b>English</b><span>Body, front, partition, plinth, lift-up door</span></div>
+      <div lang="ru" dir="ltr"><b>Русский</b><span>Корпус, фасад, перегородка, цоколь, подъёмник</span></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>Design Maker © 2026</span>
+    <span><span data-l="he">כלי לנגריות ולבתי מלאכה לרהיטים</span><span data-l="en">A tool for carpentry and furniture workshops</span><span data-l="ru">Инструмент для столярных и мебельных мастерских</span></span>
+  </div>
+</footer>
+
+<script>
+  const DIR = { he: 'rtl', en: 'ltr', ru: 'ltr' }
+  function setLang(l) {
+    document.documentElement.lang = l
+    document.documentElement.dir = DIR[l]
+    document.querySelectorAll('[data-set]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.set === l)))
+    try { localStorage.setItem('dm.site.lang', l) } catch (e) { /* not kept */ }
+  }
+  document.querySelectorAll('[data-set]').forEach((b) => b.addEventListener('click', () => setLang(b.dataset.set)))
+  let start = 'he'
+  try { start = localStorage.getItem('dm.site.lang') || (navigator.language || 'he').slice(0, 2) } catch (e) { /* default */ }
+  setLang(DIR[start] ? start : 'he')
+</script>
+</body>
+</html>
