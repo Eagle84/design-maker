@@ -82,6 +82,12 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 10px 24px; justify-content: 
 [data-l] { display: none; }
 html[lang="he"] [data-l="he"], html[lang="en"] [data-l="en"], html[lang="ru"] [data-l="ru"] { display: revert; }
 
+.langs .short { display: none; }
+@media (max-width: 520px) {
+  .langs .full { display: none; }
+  .langs .short { display: inline; }
+  .langs button { padding: 7px 11px; min-width: 40px; }
+}
 @media (max-width: 900px) {
   .steps, .features, .langs-demo { grid-template-columns: minmax(0, 1fr); }
   .step { margin-block-start: 10px; }
@@ -93,9 +99,9 @@ html[lang="he"] [data-l="he"], html[lang="en"] [data-l="en"], html[lang="ru"] [d
   <div class="wrap">
     <a class="logo" href="#"><i>DM</i>Design Maker</a>
     <div class="langs" role="group" aria-label="Language">
-      <button type="button" data-set="he" lang="he">עברית</button>
-      <button type="button" data-set="en" lang="en">English</button>
-      <button type="button" data-set="ru" lang="ru">Русский</button>
+      <button type="button" data-set="he" lang="he" title="עברית"><span class="full">עברית</span><span class="short">עב</span></button>
+      <button type="button" data-set="en" lang="en" title="English"><span class="full">English</span><span class="short">EN</span></button>
+      <button type="button" data-set="ru" lang="ru" title="Русский"><span class="full">Русский</span><span class="short">RU</span></button>
     </div>
   </div>
 </header>
